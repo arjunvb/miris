@@ -4,6 +4,7 @@ import (
 	"../miris"
 
 	"fmt"
+	"log"
 )
 
 func Get(predName string) (miris.PreprocessConfig, miris.ModelConfig) {
@@ -15,6 +16,8 @@ func Get(predName string) (miris.PreprocessConfig, miris.ModelConfig) {
 		return Beach(predName)
 	} else if predName == "uav" {
 		return UAV(predName)
+	} else if predName == "exp" {
+		return exp(predName)
 	}
 	panic(fmt.Errorf("unknown predicate %s", predName))
 }
@@ -32,6 +35,9 @@ func GetExec(predName string) (detectionPath string, framePath string) {
 	} else if predName == "uav" {
 		detectionPath = "data/uav/json/0011-detections.json"
 		framePath = "data/uav/frames/0011/"
+	} else if predName == "exp" {
+		detectionPath = "data/exp/json/0-detections.json"
+		framePath = "data/exp/frames/0/"
 	} else {
 		panic(fmt.Errorf("unknown predicate %s", predName))
 	}
@@ -49,14 +55,15 @@ func Shibuya(predName string) (miris.PreprocessConfig, miris.ModelConfig) {
 
 	ppCfg := miris.PreprocessConfig{
 		TrainSegments: segments[0:2],
-		ValSegments: segments[2:],
-		Predicate: predName,
-		FrameScale: 2,
+		ValSegments:   segments[2:],
+		Predicate:     predName,
+		FrameScale:    2,
 	}
 	var modelCfg miris.ModelConfig
 	for freq := 32; freq >= 1; freq /= 2 {
+		log.Printf("Frequency: %v", freq)
 		modelCfg.GNN = append(modelCfg.GNN, miris.GNNModel{
-			Freq: freq,
+			Freq:      freq,
 			ModelPath: "logs/shibuya/gnn/model",
 		})
 		modelCfg.Filters = append(modelCfg.Filters, miris.FilterModel{
@@ -88,15 +95,54 @@ func Warsaw(predName string) (miris.PreprocessConfig, miris.ModelConfig) {
 
 	ppCfg := miris.PreprocessConfig{
 		TrainSegments: segments[0:2],
-		ValSegments: segments[2:],
-		Predicate: predName,
-		FrameScale: 2,
+		ValSegments:   segments[2:],
+		Predicate:     predName,
+		FrameScale:    2,
 	}
 	var modelCfg miris.ModelConfig
 	for freq := 32; freq >= 1; freq /= 2 {
 		modelCfg.GNN = append(modelCfg.GNN, miris.GNNModel{
-			Freq: freq,
+			Freq:      freq,
 			ModelPath: "logs/warsaw/gnn/model",
+		})
+		modelCfg.Filters = append(modelCfg.Filters, miris.FilterModel{
+			Name: "rnn",
+			Freq: freq,
+			Cfg: map[string]string{
+				"model_path": fmt.Sprintf("logs/%s/%d/filter-rnn/model", predName, freq),
+			},
+		})
+		modelCfg.Refiners = append(modelCfg.Refiners, miris.RefineModel{
+			Name: "rnn",
+			Freq: freq,
+			Cfg: map[string]string{
+				"model_path": fmt.Sprintf("logs/%s/%d/refine-rnn/model", predName, freq),
+			},
+		})
+	}
+	return ppCfg, modelCfg
+}
+
+func exp(predName string) (miris.PreprocessConfig, miris.ModelConfig) {
+	var segments []miris.Segment
+	for _, i := range []int{0} {
+		segments = append(segments, miris.Segment{
+			FramePath: fmt.Sprintf("data/exp/frames/%d/", i),
+			TrackPath: fmt.Sprintf("data/exp/json/%d-baseline.json", i),
+		})
+	}
+
+	ppCfg := miris.PreprocessConfig{
+		TrainSegments: segments[0:],
+		ValSegments:   segments[:0],
+		Predicate:     predName,
+		FrameScale:    2,
+	}
+	var modelCfg miris.ModelConfig
+	for freq := 32; freq >= 1; freq /= 2 {
+		modelCfg.GNN = append(modelCfg.GNN, miris.GNNModel{
+			Freq:      freq,
+			ModelPath: "logs/exp/gnn/model",
 		})
 		modelCfg.Filters = append(modelCfg.Filters, miris.FilterModel{
 			Name: "rnn",
@@ -127,14 +173,14 @@ func Beach(predName string) (miris.PreprocessConfig, miris.ModelConfig) {
 
 	ppCfg := miris.PreprocessConfig{
 		TrainSegments: segments[0:2],
-		ValSegments: segments[2:],
-		Predicate: predName,
-		FrameScale: 2,
+		ValSegments:   segments[2:],
+		Predicate:     predName,
+		FrameScale:    2,
 	}
 	var modelCfg miris.ModelConfig
 	for freq := 32; freq >= 1; freq /= 2 {
 		modelCfg.GNN = append(modelCfg.GNN, miris.GNNModel{
-			Freq: freq,
+			Freq:      freq,
 			ModelPath: "logs/beach/gnn/model",
 		})
 		modelCfg.Filters = append(modelCfg.Filters, miris.FilterModel{
@@ -166,14 +212,14 @@ func UAV(predName string) (miris.PreprocessConfig, miris.ModelConfig) {
 
 	ppCfg := miris.PreprocessConfig{
 		TrainSegments: segments[0:2],
-		ValSegments: segments[2:],
-		Predicate: predName,
-		FrameScale: 2,
+		ValSegments:   segments[2:],
+		Predicate:     predName,
+		FrameScale:    2,
 	}
 	var modelCfg miris.ModelConfig
 	for freq := 32; freq >= 1; freq /= 2 {
 		modelCfg.GNN = append(modelCfg.GNN, miris.GNNModel{
-			Freq: freq,
+			Freq:      freq,
 			ModelPath: "logs/uav/gnn/model",
 		})
 		modelCfg.Filters = append(modelCfg.Filters, miris.FilterModel{

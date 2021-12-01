@@ -7,6 +7,7 @@ import (
 
 	"fmt"
 	"os"
+	"log"
 )
 
 func main() {
@@ -26,6 +27,7 @@ func main() {
 		RefineOutput: fmt.Sprintf("logs/%s/%d/%v/refine.json", predName, plan.Freq, plan.Bound),
 		OutPath: fmt.Sprintf("logs/%s/%d/%v/final.json", predName, plan.Freq, plan.Bound),
 	}
+	log.Printf("%v", modelCfg)
 	exec.Exec(ppCfg, modelCfg, plan, execCfg)
 }
 
