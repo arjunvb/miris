@@ -36,8 +36,10 @@ func GetExec(predName string) (detectionPath string, framePath string) {
 		detectionPath = "data/uav/json/0011-detections.json"
 		framePath = "data/uav/frames/0011/"
 	} else if predName == "exp" {
-		detectionPath = "data/exp/json/0-detections.json"
-		framePath = "data/exp/frames/0/"
+		detectionPath = "/data/lidar-data/exp-20november21-0943/left/0-detections.json"
+		framePath = "/data/lidar-data/exp-20november21-0943/left/zipped-frames/"
+		// detectionPath = "data/exp/json/0-detections.json"
+		// framePath = "data/exp/frames/0/"
 	} else {
 		panic(fmt.Errorf("unknown predicate %s", predName))
 	}
