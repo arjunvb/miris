@@ -65,7 +65,6 @@ func Exec(ppCfg miris.PreprocessConfig, modelCfg miris.ModelConfig, plan miris.P
 
 		for _, freq := range []int{2 * plan.Freq, plan.Freq} {
 			var frames [][2]int
-			log.Printf("got here in exec.go")
 			for frameIdx := 0; frameIdx < gnn.NumFrames()-freq; frameIdx += freq {
 				frames = append(frames, [2]int{frameIdx, freq})
 				seenFrames[frameIdx] = true
@@ -87,7 +86,6 @@ func Exec(ppCfg miris.PreprocessConfig, modelCfg miris.ModelConfig, plan miris.P
 	var tracks [][]miris.Detection
 	for _, comp := range components {
 		for _, track := range gnn.SampleComponent(comp) {
-			log.Print("hello")
 			for i := range track {
 				log.Printf("[exec] Track idx: %d, length of tracks: %d", i, len(tracks))
 				track[i].TrackID = len(tracks) + 1
