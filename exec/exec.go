@@ -1,10 +1,11 @@
 package exec
 
 import (
-	gnnlib "../gnn"
-	"../miris"
 	"log"
 	"os"
+
+	gnnlib "../gnn"
+	"../miris"
 )
 
 // Returns needed [2]int{frameIdx, freq} from a list of frames that we need
@@ -80,7 +81,6 @@ func Exec(ppCfg miris.PreprocessConfig, modelCfg miris.ModelConfig, plan miris.P
 	log.Printf("[exec] ... tracking yields graph with %d edges (seen %d frames)", len(graph), len(seenFrames))
 	// maxFrame := ((gnn.NumFrames() - 1) / plan.Freq) * plan.Freq
 
-
 	// extract tracks
 	var components [][]gnnlib.Edge
 	components = gnn.GetComponents(graph)
@@ -97,3 +97,4 @@ func Exec(ppCfg miris.PreprocessConfig, modelCfg miris.ModelConfig, plan miris.P
 	}
 	log.Printf("[exec] extracted %d tracks", len(tracks))
 	miris.WriteJSON(execCfg.OutPath, miris.TracksToDetections(tracks))
+}
