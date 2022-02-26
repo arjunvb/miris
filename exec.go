@@ -16,7 +16,7 @@ func main() {
 	sourceDir := os.Args[3]
 
 	ppCfg, modelCfg := data.Get(predName)
-	detectionPath, framePath := sourceDir+"0-detections.json", "/data/miris/data/exp/frames/0/"
+	detectionPath, framePath := sourceDir+"/0-detections.json", "/data/miris/data/exp/frames/0/"
 	// detectionPath = "data/exp/json/0-detections.json"
 	// framePath = "data/exp/frames/0/"
 	var plan miris.PlannerConfig
@@ -24,7 +24,7 @@ func main() {
 	execCfg := miris.ExecConfig{
 		DetectionPath:     detectionPath,
 		FramePath:         framePath,
-		TrackOutput:       fmt.Sprintf("logs/%s/%d/%v/track.json", predName, plan.Freq, plan.Bound),
+		TrackOutput:       fmt.Sprintf("%s/track.json", sourceDir),
 		FilterOutput:      fmt.Sprintf("logs/%s/%d/%v/filter.json", predName, plan.Freq, plan.Bound),
 		UncertaintyOutput: fmt.Sprintf("logs/%s/%d/%v/uncertainty.json", predName, plan.Freq, plan.Bound),
 		RefineOutput:      fmt.Sprintf("logs/%s/%d/%v/refine.json", predName, plan.Freq, plan.Bound),
