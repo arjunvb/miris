@@ -1,8 +1,8 @@
 package refine
 
 import (
-	"../miris"
-	"../predicate"
+	"github.com/arjunvb/miris/miris"
+	"github.com/arjunvb/miris/predicate"
 
 	"fmt"
 	"math"

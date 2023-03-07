@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 
-	gnnlib "../gnn"
-	"../miris"
+	gnnlib "github.com/arjunvb/miris/gnn"
+	"github.com/arjunvb/miris/miris"
 )
 
 // Returns needed [2]int{frameIdx, freq} from a list of frames that we need

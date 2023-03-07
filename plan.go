@@ -1,9 +1,9 @@
 package main
 
 import (
-	"./data"
-	"./miris"
-	"./planner"
+	"github.com/arjunvb/miris/data"
+	"github.com/arjunvb/miris/miris"
+	"github.com/arjunvb/miris/planner"
 
 	"fmt"
 	"log"

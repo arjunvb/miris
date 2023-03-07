@@ -1,9 +1,9 @@
 package main
 
 import (
-	"./data"
-	"./exec"
-	"./miris"
+	"github.com/arjunvb/miris/data"
+	"github.com/arjunvb/miris/exec"
+	"github.com/arjunvb/miris/miris"
 
 	"fmt"
 	"log"

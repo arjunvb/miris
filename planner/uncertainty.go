@@ -1,9 +1,9 @@
 package planner
 
 import (
-	"../gnn"
-	"../miris"
-	"../predicate"
+	"github.com/arjunvb/miris/gnn"
+	"github.com/arjunvb/miris/miris"
+	"github.com/arjunvb/miris/predicate"
 
 	"fmt"
 	"log"

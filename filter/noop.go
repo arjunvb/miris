@@ -1,7 +1,7 @@
 package filter
 
 import (
-	"../miris"
+	"github.com/arjunvb/miris/miris"
 )
 
 func init() {

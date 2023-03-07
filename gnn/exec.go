@@ -1,7 +1,7 @@
 package gnn
 
 import (
-	"../miris"
+	"github.com/arjunvb/miris/miris"
 
 	"fmt"
 	"sort"

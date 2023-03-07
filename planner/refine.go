@@ -1,9 +1,9 @@
 package planner
 
 import (
-	"../filter"
-	"../miris"
-	"../refine"
+	"github.com/arjunvb/miris/filter"
+	"github.com/arjunvb/miris/miris"
+	"github.com/arjunvb/miris/refine"
 
 	"log"
 )

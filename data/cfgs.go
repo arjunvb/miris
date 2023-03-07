@@ -1,7 +1,7 @@
 package data
 
 import (
-	"../miris"
+	"github.com/arjunvb/miris/miris"
 
 	"fmt"
 	"log"

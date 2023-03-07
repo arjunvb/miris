@@ -1,8 +1,8 @@
 package rnn
 
 import (
-	"../../miris"
-	"../../predicate"
+	"github.com/arjunvb/miris/miris"
+	"github.com/arjunvb/miris/predicate"
 
 	"bufio"
 	"encoding/json"
