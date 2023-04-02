@@ -16,7 +16,7 @@ func main() {
 	sourceDir := os.Args[3]
 
 	ppCfg, modelCfg := data.Get(predName)
-	detectionPath, framePath := sourceDir+"/0-detections.json", "/data/miris/data/exp/frames/0/"
+	detectionPath, framePath := sourceDir+"/0-detections.json", sourceDir+"/miris/"
 	// detectionPath = "data/exp/json/0-detections.json"
 	// framePath = "data/exp/frames/0/"
 	var plan miris.PlannerConfig
